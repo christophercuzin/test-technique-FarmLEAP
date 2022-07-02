@@ -9,13 +9,14 @@ if(document.getElementById('add_new_field')) {
     //function to create an input
     newFieldButton.addEventListener('click', () =>{
 
-        // create new element 
+        // create new elements
         const newField = document.createElement('input');
+        const newfieldLabel = document.createElement ("label");
 
         //add new class
         newField.classList.add('form-control');
         newField.classList.add('new_field');
-        newField.classList.add('mt-3');
+        newField.classList.add('mb-3');
 
         // set attritube
         newField.setAttribute('required', 'required');
@@ -26,7 +27,10 @@ if(document.getElementById('add_new_field')) {
         newField.type = 'number';
 
         // insert him into a div
+        newfieldLabel.innerHTML = 'Size';
+        newFieldContainer.appendChild(newfieldLabel);
         newFieldContainer.appendChild(newField);
+        
 
         // get all fields create to rename them
         const newFields = document.getElementsByClassName('new_field');
@@ -34,10 +38,13 @@ if(document.getElementById('add_new_field')) {
         // counts the number of fields and attributes the result to the hidden fields 
         numberOfField.value = newFields.length;
 
-        // do a loop and set a unique name  to each field
+        // do a loop and set a unique name and id to each field
         for (let i = 0; i < newFields.length; i++) {
             const newField = newFields[i];
             newField.setAttribute('name', 'new_field' + i)
+            newField.setAttribute('id', 'new_field' + i);
+            newfieldLabel.setAttribute('for', 'new_field' + i);
+            
         }
     })
 }
