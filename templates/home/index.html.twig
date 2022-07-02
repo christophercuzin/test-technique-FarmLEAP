@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New size{% endblock %}
+
+{% block body %}
+
+    <main class="container-fluid">
+        <form method"POST" class="row">
+            <div class="col-6 mt-5">
+                <h1 class="text-center">Add new size</h1>
+                <input type="number" name="reference_size" class="form-control mt-3" placeholder="185" min="0" required>
+                <div id="new_field">
+                    <input type="hidden" name="number_of_field" id="number_of_field">
+                </div>
+                <button type="button" class="btn btn-primary col-12 mt-3" id="add_new_field">Add new field</button>
+                <button type="submit" class="btn btn-primary col-12 mt-3">Save</burron>
+            </div>
+        </form>
+    </main>
+
+{% endblock %}
