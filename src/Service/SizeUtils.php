@@ -22,11 +22,10 @@ class SizeUtils
         $entityManager = $this->entityManager;
         $referenceSize = new ReferenceSize;
 
-        
         $referenceSize->setReferenceSize($sizeData['reference_size']);
         $entityManager->persist($referenceSize);
         $entityManager->flush();
-
+        
         return $referenceSize;
     }
 

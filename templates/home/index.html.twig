@@ -20,25 +20,50 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <td scope="col">Reference Size</td>
-                            <td scope="col">Sum</td>
-                            <td scope="col">Average</td>
-                            <td scope="col">greater than the reference size</td>
-                            <td scope="col">less than the reference size</td>
+                            <td scope="col" class="text-center">Reference Size</td>
+                            <td scope="col" class="text-center">Sum</td>
+                            <td scope="col" class="text-center">Average</td>
+                            <td scope="col" class="text-center">Is greater than</td>
+                            <td scope="col" class="text-center">Is less than</td>
                         </tr>
                     </thead>
                     <tbody>
                     {% for referenceSize in referenceSizes %}
                         <tr>
-                            <td scope="col">{{referenceSize.referenceSize}}</td>
-                            <td scope="col"></td>
-                            <td scope="col"></td>
-                            <td scope="col"></td>
-                            <td scope="col"></td>
+                            <td scope="col" class="text-center">{{referenceSize.referenceSize ~ " " ~ "cm"}}</td>
+                            <td scope="col" class="text-center">
+                            {% for sum in sums %}
+                                {% if sum["id"] is same as referenceSize.id %}
+                                    {{sum["sum"] ~ " " ~ "m"}}
+                                {% endif %} 
+                            {% endfor %}
+                            </td>
+                            
+                            <td scope="col" class="text-center">
+                                {% for avg in avgs %}
+                                    {% if avg["id"] is same as referenceSize.id %}
+                                        {{avg["avg"] ~ " " ~ "m"}}
+                                    {% endif %} 
+                                {% endfor %}
+                            </td>
+                            <td scope="col" class="text-center">
+                                {% for size in referenceSize.sizes %}
+                                    {% if size.size > referenceSize.referenceSize %}
+                                        {{size.size}} <br>  
+                                    {% endif %}
+                                {% endfor %}
+                            </td> 
+                            <td scope="col" class="text-center">
+                                {% for size in referenceSize.sizes %}
+                                    {% if size.size < referenceSize.referenceSize %}
+                                        {{size.size}} <br> 
+                                    {% endif %}
+                                {% endfor %}
+                            </td> 
                         </tr>
                     {% endfor %}
                 </tbody>
-                </table
+                </table>
             </div>
         </div>   
     </main>
