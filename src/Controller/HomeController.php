@@ -15,7 +15,6 @@ class HomeController extends AbstractController
     public function index(Request $request, SizeUtils $sizeUtils, ReferenceSizeRepository $refSizeRepo): Response
     {
         $sizeData = $request->request->all();
-        var_dump($sizeData);
         $sizeData = array_map('trim', $sizeData);
         if (!empty($sizeData)) {
         $referenceSize = $sizeUtils->flushReferenceSize($sizeData);
