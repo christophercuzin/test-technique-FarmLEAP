@@ -72,4 +72,46 @@ class ReferenceSize
 
         return $this;
     }
+
+    public function getSum(): int|float
+    { 
+        $allSizes = [];  
+        foreach ($this->sizes as $size) {
+            
+            $allSizes[] = $size->getSize();
+        }
+        return (array_sum($allSizes)/100);
+    }
+
+    public function getAvg(): int|float
+    {
+        $allSizes = [];  
+        foreach ($this->sizes as $size) {
+            
+            $allSizes[] = $size->getSize();
+        }
+        return (array_sum($allSizes)/count($allSizes)/100);
+    }
+
+    public function getSmallest(): int|float
+    {
+        $allSizes = [];  
+        foreach ($this->sizes as $size) {
+            
+            $allSizes[] = $size->getSize();
+        }
+        $allSizes[] = sort( $allSizes);
+        return ($allSizes[0]/100);
+    }
+
+    public function getGreatest(): int|float
+    {
+        $allSizes = [];  
+        foreach ($this->sizes as $size) {
+            
+            $allSizes[] = $size->getSize();
+        }
+        $allSizes[] = rsort( $allSizes);
+        return ($allSizes[0]/100);
+    }
 }

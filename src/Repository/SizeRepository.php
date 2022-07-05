@@ -39,38 +39,6 @@ class SizeRepository extends ServiceEntityRepository
         }
     }
 
-    public function findSum(): array
-    {
-        $connexion = $this->getEntityManager()->getConnection();
-        $sql = '
-        SELECT r.id, (SUM(size)/100) as sum FROM  size s 
-        INNER JOIN reference_size r
-        on r.id = s.reference_size_id
-        GROUP BY r.id
-        ';
-
-        $statement = $connexion->prepare($sql);
-        $result = $statement->executeQuery();
-
-        return $result->fetchAllAssociative();
-    }
-
-    public function findAvg(): array
-    {
-        $connexion = $this->getEntityManager()->getConnection();
-        $sql = '
-        SELECT r.id, (AVG(size)/100) as avg FROM  size s 
-        INNER JOIN reference_size r
-        on r.id = s.reference_size_id
-        GROUP BY r.id
-        ';
-
-        $statement = $connexion->prepare($sql);
-        $result = $statement->executeQuery();
-
-        return $result->fetchAllAssociative();
-    }
-
 //    /**
 //     * @return Size[] Returns an array of Size objects
 //     */

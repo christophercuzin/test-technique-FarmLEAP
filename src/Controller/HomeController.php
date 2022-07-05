@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\ReferenceSize;
 use App\Repository\ReferenceSizeRepository;
-use App\Repository\SizeRepository;
 use App\Service\SizeUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +16,6 @@ class HomeController extends AbstractController
         Request $request,
         SizeUtils $sizeUtils,
         ReferenceSizeRepository $refSizeRepo,
-        SizeRepository $sizeRepository
         ): Response {
         $sizeData = $request->request->all();
         $sizeData = array_map('trim', $sizeData);
@@ -28,13 +25,11 @@ class HomeController extends AbstractController
         $sizeUtils->flushSize($referenceSize, $sizeData);
         return $this->redirectToRoute('home', []);
         }
-        $referenceSizes = $refSizeRepo->findAll();
-        $sums = $sizeRepository->findSum();
-        $avgs = $sizeRepository->findAvg();
+
+        $referenceSizes = $refSizeRepo->findAllJoin();
+
         return $this->render('home/index.html.twig', [
             'referenceSizes' => $referenceSizes,
-            'sums' => $sums,
-            'avgs' => $avgs,
         ]);
     }
 }

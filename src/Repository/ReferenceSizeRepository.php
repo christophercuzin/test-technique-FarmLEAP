@@ -39,7 +39,15 @@ class ReferenceSizeRepository extends ServiceEntityRepository
         }
     }
 
-    
+    public function findAllJoin(): array
+    {
+        return $this->createQueryBuilder('rs')
+            ->select('rs, s')
+            ->leftjoin ('rs.sizes', 's')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 //    /**
 //     * @return ReferenceSize[] Returns an array of ReferenceSize objects

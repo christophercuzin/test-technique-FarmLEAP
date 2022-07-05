@@ -23,6 +23,8 @@
                             <td scope="col" class="text-center">Reference Size</td>
                             <td scope="col" class="text-center">Sum</td>
                             <td scope="col" class="text-center">Average</td>
+                            <td scope="col" class="text-center">The greatest</td>
+                            <td scope="col" class="text-center">The smallest</td>
                             <td scope="col" class="text-center">Is greater than</td>
                             <td scope="col" class="text-center">Is less than</td>
                         </tr>
@@ -32,19 +34,24 @@
                         <tr>
                             <td scope="col" class="text-center">{{referenceSize.referenceSize ~ " " ~ "cm"}}</td>
                             <td scope="col" class="text-center">
-                            {% for sum in sums %}
-                                {% if sum["id"] is same as referenceSize.id %}
-                                    {{sum["sum"] ~ " " ~ "m"}}
-                                {% endif %} 
-                            {% endfor %}
+                                {% if referenceSize.sizes is not empty %}
+                                    {{referenceSize.sum|number_format(1) ~ " " ~ "m"}}
+                                {% endif %}
                             </td>
-                            
                             <td scope="col" class="text-center">
-                                {% for avg in avgs %}
-                                    {% if avg["id"] is same as referenceSize.id %}
-                                        {{avg["avg"] ~ " " ~ "m"}}
-                                    {% endif %} 
-                                {% endfor %}
+                                {% if referenceSize.sizes is not empty %}
+                                    {{referenceSize.avg|number_format(2) ~ " " ~ "m"}}
+                                {% endif %}    
+                            </td>
+                            <td scope="col" class="text-center">
+                                {% if referenceSize.sizes is not empty %}
+                                    {{ referenceSize.greatest|number_format(2) ~ " " ~ "m" }}
+                                {% endif %}
+                            </td>
+                            <td scope="col" class="text-center">
+                                {% if referenceSize.sizes is not empty %}
+                                    {{ referenceSize.smallest|number_format(2) ~ " " ~ "m" }}
+                                {% endif %} 
                             </td>
                             <td scope="col" class="text-center">
                                 {% for size in referenceSize.sizes %}
@@ -54,7 +61,7 @@
                                 {% endfor %}
                             </td> 
                             <td scope="col" class="text-center">
-                                {% for size in referenceSize.sizes %}
+                                {% for  size in referenceSize.sizes  %}
                                     {% if size.size < referenceSize.referenceSize %}
                                         {{size.size}} <br> 
                                     {% endif %}
