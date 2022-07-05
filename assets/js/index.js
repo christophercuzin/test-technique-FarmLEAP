@@ -5,6 +5,7 @@ if(document.getElementById('add_new_field')) {
     const newFieldButton = document.getElementById('add_new_field');
     const newFieldContainer = document.getElementById('new_field');
     const numberOfField = document.getElementById('number_of_field');
+    const newSizeForm = document.getElementById('newSizeForm');
 
     //function to create an input
     newFieldButton.addEventListener('click', () =>{
@@ -17,6 +18,7 @@ if(document.getElementById('add_new_field')) {
         newField.classList.add('form-control');
         newField.classList.add('new_field');
         newField.classList.add('mb-3');
+        newfieldLabel.classList.add('field_label')
 
         // set attritube
         newField.setAttribute('required', 'required');
@@ -46,5 +48,41 @@ if(document.getElementById('add_new_field')) {
             newfieldLabel.setAttribute('for', 'new_field' + i);
             
         }
-    })
+    });
+
+    newSizeForm.addEventListener('submit', function(event){
+        event.preventDefault();
+
+        const form = new FormData(newSizeForm);
+        fetch('/home/index',{
+            method: 'POST',
+            body: form
+        })
+        .then(function(){
+            loadAllSizes();
+            document.getElementById('reference_size').value = '';
+            document.getElementById('number_of_field').value = '';
+            const newFields = document.getElementsByClassName('new_field');
+            const fieldLabels = document.getElementsByClassName('field_label');
+            
+            for (let i = 0; i < newFields.length; i) {
+                const newField = newFields[i];
+                newField.remove();
+            }
+            for (let i = 0; i < fieldLabels.length; i) {
+                const fieldLabel = fieldLabels[i];
+                fieldLabel.remove();
+            }
+        })
+    });
+
+    function loadAllSizes() {
+        const tbody = document.getElementById('sizeList');
+
+        fetch('/home/index/list')
+        .then(response => response.text()
+        .then(content => tbody.innerHTML = content))
+        ;
+    }
+    loadAllSizes();
 }

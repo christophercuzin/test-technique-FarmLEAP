@@ -9,13 +9,28 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/home')]
 class HomeController extends AbstractController
 {
-    #[Route('/home', name: 'home')]
+    #[Route('/index/list', name: 'home_index_get_list', methods: ['GET'])]
+    public function getPartialList(ReferenceSizeRepository $refSizeRepo): Response
+    {
+        return $this->render('home/_listSizes.html.twig', [
+            'referenceSizes' => $refSizeRepo->findAllJoin()
+        ]);
+    }
+
+    #[Route('/index', name: 'home_index_get', methods: ['GET'])]
+    public function adminGet(): Response
+    {
+        return $this->render('home/index.html.twig');
+    }
+
+    #[Route('/index', name: 'home_index', methods: ['POST'])]
     public function index(
         Request $request,
         SizeUtils $sizeUtils,
-        ReferenceSizeRepository $refSizeRepo,
+
         ): Response {
         $sizeData = $request->request->all();
         $sizeData = array_map('trim', $sizeData);
@@ -23,13 +38,10 @@ class HomeController extends AbstractController
         if (!empty($sizeData)) {
         $referenceSize = $sizeUtils->flushReferenceSize($sizeData);
         $sizeUtils->flushSize($referenceSize, $sizeData);
-        return $this->redirectToRoute('home', []);
         }
 
-        $referenceSizes = $refSizeRepo->findAllJoin();
-
-        return $this->render('home/index.html.twig', [
-            'referenceSizes' => $referenceSizes,
-        ]);
+        
+        return new Response();
+        
     }
 }

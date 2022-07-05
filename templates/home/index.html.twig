@@ -6,7 +6,7 @@
 
     <main class="container-fluid">
         <div class="row">
-            <form method="POST" class="col-6 mt-5">
+            <form method="POST" class="col-6 mt-5" id='newSizeForm'>
                 <h1 class="text-center">Add new size</h1>
                 <label for="reference_size">Reference size</label>
                 <input type="number" name="reference_size" id="reference_size" class="form-control mb-3" placeholder="185" min="0" required>
@@ -29,47 +29,9 @@
                             <td scope="col" class="text-center">Is less than</td>
                         </tr>
                     </thead>
-                    <tbody>
-                    {% for referenceSize in referenceSizes %}
-                        <tr>
-                            <td scope="col" class="text-center">{{referenceSize.referenceSize ~ " " ~ "cm"}}</td>
-                            <td scope="col" class="text-center">
-                                {% if referenceSize.sizes is not empty %}
-                                    {{referenceSize.sum|number_format(1) ~ " " ~ "m"}}
-                                {% endif %}
-                            </td>
-                            <td scope="col" class="text-center">
-                                {% if referenceSize.sizes is not empty %}
-                                    {{referenceSize.avg|number_format(2) ~ " " ~ "m"}}
-                                {% endif %}    
-                            </td>
-                            <td scope="col" class="text-center">
-                                {% if referenceSize.sizes is not empty %}
-                                    {{ referenceSize.greatest|number_format(2) ~ " " ~ "m" }}
-                                {% endif %}
-                            </td>
-                            <td scope="col" class="text-center">
-                                {% if referenceSize.sizes is not empty %}
-                                    {{ referenceSize.smallest|number_format(2) ~ " " ~ "m" }}
-                                {% endif %} 
-                            </td>
-                            <td scope="col" class="text-center">
-                                {% for size in referenceSize.sizes %}
-                                    {% if size.size > referenceSize.referenceSize %}
-                                        {{size.size}} <br>  
-                                    {% endif %}
-                                {% endfor %}
-                            </td> 
-                            <td scope="col" class="text-center">
-                                {% for  size in referenceSize.sizes  %}
-                                    {% if size.size < referenceSize.referenceSize %}
-                                        {{size.size}} <br> 
-                                    {% endif %}
-                                {% endfor %}
-                            </td> 
-                        </tr>
-                    {% endfor %}
-                </tbody>
+                    <tbody id="sizeList">
+                        
+                    </tbody>
                 </table>
             </div>
         </div>   

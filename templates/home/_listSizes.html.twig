@@ -1,0 +1,51 @@
+{% for referenceSize in referenceSizes %}
+    <tr>
+        <td scope="col" class="text-center">{{referenceSize.referenceSize ~ " " ~ "cm"}}</td>
+        <td scope="col" class="text-center">
+            {% if referenceSize.sizes is not empty %}
+                {{referenceSize.sum|number_format(1) ~ " " ~ "m"}}
+            {% else %}
+                nothings found 
+            {% endif %}
+        </td>
+        <td scope="col" class="text-center">
+            {% if referenceSize.sizes is not empty %}
+                {{referenceSize.avg|number_format(2) ~ " " ~ "m"}}
+            {% else %}
+                nothings found 
+            {% endif %}    
+        </td>
+        <td scope="col" class="text-center">
+            {% if referenceSize.sizes is not empty %}
+                {{ referenceSize.greatest|number_format(2) ~ " " ~ "m" }}
+            {% else %}
+                nothings found
+            {% endif %}
+        </td>
+        <td scope="col" class="text-center">
+            {% if referenceSize.sizes is not empty %}
+                {{ referenceSize.smallest|number_format(2) ~ " " ~ "m" }}
+            {% else %}
+                nothings found 
+            {% endif %} 
+        </td>
+        <td scope="col" class="text-center">
+            {% for size in referenceSize.sizes %}
+                {% if size.size > referenceSize.referenceSize %}
+                    {{size.size}} <br>   
+                {% endif %}
+                {% else %}
+                    nothings found
+            {% endfor %}
+        </td> 
+        <td scope="col" class="text-center">
+            {% for  size in referenceSize.sizes  %}
+                {% if size.size < referenceSize.referenceSize %}
+                    {{size.size}} <br>        
+                {% endif %}
+                {% else %}
+                    nothings found
+            {% endfor %}
+        </td> 
+    </tr>
+{% endfor %}

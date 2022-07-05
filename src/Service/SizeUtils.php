@@ -33,11 +33,13 @@ class SizeUtils
     {
         $entityManager = $this->entityManager;
         $sizes = $this->retrieveSize->retrievAllSize($sizeData);
-        foreach ($sizes as $sizeValue) {
-            $size = new Size;
-            $size->setSize($sizeValue);
-            $size->setReferenceSize($referenceSize);
-            $entityManager->persist($size);
+        if(!empty($sizes)) {
+            foreach ($sizes as $sizeValue) {
+                $size = new Size;
+                $size->setSize($sizeValue);
+                $size->setReferenceSize($referenceSize);
+                $entityManager->persist($size);
+            }
         }
         $entityManager->flush();
     }
